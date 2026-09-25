@@ -63,14 +63,14 @@ def calculate_water(weight):
 
 
 water_needed = calculate_water(user_weight)
-
+bmi = calculate_bmi(user_weight, user_height)
 
 print(f'{user_name}, спасибо за ответы!')
 print(f'Вы указали возраст {user_age} лет, вес {user_weight} кг, '
       f'рост {user_height} м.')
 print('На основе этих данных получилось высчитать Ваш Индекс Массы Тела, '
       'а также рекомендации по суточной норме воды.')
-print(f'ИМТ составляет {calculate_bmi(user_weight, user_height)}')
+print(f'ИМТ составляет {bmi}')
 print(f'Рекомендуем пить {water_needed} л в день.')
 print('Спасибо, что воспользовались FitLife!')
 print(f'Хорошего дня, {user_name}!')
