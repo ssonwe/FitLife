@@ -1,9 +1,18 @@
 # проект FitLife - MVP версия 1.0
 
+ML_PER_KG = 30  # стандартная рекомендация мл воды на кг веса
+ML_IN_L = 1000  # мл в л
+
+
 print('Добро пожаловать в FitLife — ваш уголок заботы о своем здоровье!')
 
-user_name = input('Подскажите, как к Вам можно обращаться? ')
-user_name = user_name.title()
+# узнаем имя
+while True:
+    user_name = input('Подскажите, как к Вам можно обращаться? ')
+    user_name = user_name.strip().title()  # удаление пробелов, заглавная буква
+    if user_name:
+        break
+    print('Кажется, Вы не написали имя. Давайте попробуем еще раз :)')
 
 
 # узнаем возраст
@@ -55,22 +64,39 @@ def calculate_bmi(weight, height):
 # здесь также flake8 выдал замечания насчет docstring, ии помог
 def calculate_water(weight):
     """расчет суточной нормы воды"""
-    ML_PER_KG = 30  # стандартная рекомендация мл воды на кг веса
-    ML_IN_L = 1000  # мл в л
     ml_needed = ML_PER_KG * weight
     l_needed = ml_needed / ML_IN_L
     return round(l_needed, 1)
 
 
+def get_bmi_info(bmi):
+    """получение инфы по ИМТ"""
+    if bmi < 16:
+        return 'Выраженный дефицит массы тела. Необходима консультация врача!'
+    elif 16 <= bmi <= 18.4:
+        return 'Недостаточная масса тела. Соит обратить внимание!'
+    elif 18.5 <= bmi <= 24.9:
+        return 'Масса тела в пределах здорового диапазона. Отличный результат!'
+    elif 25 <= bmi <= 29.9:
+        return 'Избыточная масса тела. Стоит обратить внимание!'
+    elif 30 <= bmi <= 34.9:
+        return 'Ожирение I степени. Необходима консультация врача!'
+    elif 35 <= bmi <= 39.9:
+        return 'Ожирение II степени. Необходима консультация врача!'
+    else:
+        return 'Ожирение III степени. Необходима консультация врача!'
+
+
 water_needed = calculate_water(user_weight)
 bmi = calculate_bmi(user_weight, user_height)
+bmi_info = get_bmi_info(bmi)
 
 print(f'{user_name}, спасибо за ответы!')
 print(f'Вы указали возраст {user_age} лет, вес {user_weight} кг, '
       f'рост {user_height} м.')
 print('На основе этих данных получилось высчитать Ваш Индекс Массы Тела, '
       'а также рекомендации по суточной норме воды.')
-print(f'ИМТ составляет {bmi}')
+print(f'ИМТ составляет {bmi}.', bmi_info)
 print(f'Рекомендуем пить {water_needed} л в день.')
 print('Спасибо, что воспользовались FitLife!')
 print(f'Хорошего дня, {user_name}!')
